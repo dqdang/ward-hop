@@ -1,0 +1,2 @@
+riotwatcher==3.1.0
+Django==3.1.2
