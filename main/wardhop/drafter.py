@@ -2,7 +2,7 @@ import os
 from riotwatcher import LolWatcher, ApiError
 import main.settings as settings
 
-global variables
+
 try:
     API_KEY = os.environ["API_KEY"]
 except KeyError:
@@ -54,10 +54,3 @@ class ChampionDatabase():
             if champ.startswith(key):
                 found.append(champ)
         return found
-
-
-def main():
-    cd = ChampionDatabase()
-
-if __name__ == "__main__":
-    main()
