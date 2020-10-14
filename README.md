@@ -1,2 +1,2 @@
 # ward-hop
-Simulate League of Legends pick ban phase.
+Simulate a League of Legends pick ban phase
