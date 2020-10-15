@@ -3,16 +3,15 @@ from django.views.generic import TemplateView, View
 from wardhop.drafter import ChampionDatabase as ChampionDatabase
 import main.settings as settings
 
+
 cd = ChampionDatabase()
 
 
 class BasePageView(View):
     template_name = 'base.html'
-    champions = cd.get_all_champ_data()
     images = cd.get_all_champ_images()
     def get(self, request):
         all_images = [settings.STATIC_URL + self.images[champ]['full'] for champ in self.images.keys()]
-        # champions = cd.get_all_champ_data()
         return render(request, self.template_name, {"images": all_images})
 
 class SearchResultsView(View):
@@ -20,7 +19,6 @@ class SearchResultsView(View):
     error_template = "errors.html"
 
     def get(self, request):
-        champions = cd.get_all_champ_data()
         champ = self.request.GET.get('champion')
         found = cd.search(champ)
         all_images = []
