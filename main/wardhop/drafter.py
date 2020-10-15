@@ -35,8 +35,7 @@ class ChampionDatabase():
     def get_all_champ_images(self):
         images = {}
         for champ in self.static_champ_list['data']:
-            images[self.static_champ_list['data'][champ]
-                   ] = self.static_champ_list['data'][champ]['image']
+            images[champ] = self.static_champ_list['data'][champ]['image']
         return images
 
     def get_all_champ_names(self):
@@ -45,11 +44,11 @@ class ChampionDatabase():
             names.append(champ)
         return names
 
-    def get_champ_images(self, key):
+    def get_champ_image(self, key):
         key = ''.join(e for e in key if e.isalpha())
         for champ in self.static_champ_list['data']:
-            champ = champ.lower()
-            if champ.startswith(key):
+            champ_lower_case = champ.lower()
+            if champ_lower_case.startswith(key):
                 return self.static_champ_list['data'][champ]['image']
         return None
 

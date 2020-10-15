@@ -1,11 +1,6 @@
 <h1>Draft</h1>
 {% block content %}
-<ul>
-  {% for champ in champions %}
-    <li>
-      {{ champ }}
-    </li>
-  {% endfor %}
-  <!-- <p>{{ path }}</p> -->
-</ul>
+{% for image in images %}
+    <div style="display:inline-block"><img src="{{ image }}" height='100px' width='100px' style='padding-right: 6px'/></div>
+{% endfor %}
 {% endblock %}
