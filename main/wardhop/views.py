@@ -10,6 +10,7 @@ cd = ChampionDatabase()
 class BasePageView(View):
     template_name = 'base.html'
     images = cd.get_all_champ_images()
+
     def get(self, request):
         all_images = [settings.STATIC_URL + self.images[champ]['full'] for champ in self.images.keys()]
         return render(request, self.template_name, {"images": all_images})
@@ -28,3 +29,10 @@ class SearchResultsView(View):
         if len(found) > 0:
             return render(request, self.draft_template, {"images": all_images})
         return render(request, self.error_template)
+
+class PickBanView(View):
+    template_name = 'pickban.html'
+
+    def get(self, request):
+        all_images = [settings.STATIC_URL + self.images[champ]['full'] for champ in self.images.keys()]
+        return render(request, self.template_name, {"images": all_images})
