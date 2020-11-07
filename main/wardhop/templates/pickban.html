@@ -1,15 +1,48 @@
-<!--templates/pickban.html-->
+<!--templates/draft.html-->
 
 <h1>Draft</h1>
-
 {% block content %}
-<form action="{% url 'search_results' %}" method="get">
+<form action="{% url 'pick_ban' %}" method="get">
     <input name="champion" type="text" placeholder="Champ...">
-    <input type="submit" value="submit" />
+    <input type="submit" value="Enter" />
 </form>
-{% for image in images %}
-    <div style="display:inline-block">
-        <img src="{{ image }}" height='100px' width='100px' style='padding-right: 6px'/>
-    </div>
-{% endfor %}
+<p>{{ error }}</p>
+<table style="width:100%">
+<tr>
+    <th>Blue</th>
+    <th>Red</th> 
+</tr>
+<tr>
+    {% for image in blue_ban %}
+    <td><div style="display:inline-block"><img src="{{ image }}" height='20px' width='20px' style='padding-right: 1px'/></div></td>
+    {% endfor %}
+    {% for image in red_ban %}
+    <td><div style="display:inline-block"><img src="{{ image }}" height='20px' width='20px' style='padding-right: 1px'/></div></td>
+    {% endfor %}
+</tr>
+<tr>
+    <td><div style="display:inline-block"><img src="{{ blue1 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+    <td><div style="display:inline-block"><img src="{{ red1 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+</tr>
+<tr>
+    <td><div style="display:inline-block"><img src="{{ blue2 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+    <td><div style="display:inline-block"><img src="{{ red2 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+</tr>
+<tr>
+    <td><div style="display:inline-block"><img src="{{ blue3 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+    <td><div style="display:inline-block"><img src="{{ red3 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+</tr>
+<tr>
+    <td><div style="display:inline-block"><img src="{{ blue4 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+    <td><div style="display:inline-block"><img src="{{ red4 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+</tr>
+<tr>
+    <td><div style="display:inline-block"><img src="{{ blue5 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+    <td><div style="display:inline-block"><img src="{{ red5 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
+</tr>
+</table>
+<form action="{% url 'pick_ban' %}" method="get">
+    <input name="clean" type="submit" value="Clean cookies" />
+</form>
+
 {% endblock %}

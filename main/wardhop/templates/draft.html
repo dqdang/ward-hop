@@ -1,8 +1,15 @@
-<!--templates/draft.html-->
+<!--templates/pickban.html-->
 
 <h1>Draft</h1>
+
 {% block content %}
+<form action="{% url 'pick_ban' %}" method="get">
+    <input name="champion" type="text" placeholder="Champ...">
+    <input type="submit" value="submit" />
+</form>
 {% for image in images %}
-    <div style="display:inline-block"><img src="{{ image }}" height='100px' width='100px' style='padding-right: 6px'/></div>
+    <div style="display:inline-block">
+        <img src="{{ image }}" height='100px' width='100px' style='padding-right: 6px'/>
+    </div>
 {% endfor %}
 {% endblock %}

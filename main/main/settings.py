@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-API_KEY = "RGAPI-61ff5925-c1a3-4234-a6d0-b29b7cfde7c1"  # api key in env var
+API_KEY = "RGAPI-93aba0d9-de90-4a48-9419-c872ee0d4797"  # api key in env var
 
 # Application definition
 
