@@ -3,7 +3,7 @@
 <h1>Draft</h1>
 
 {% block content %}
-<form action="{% url 'search_results' %}" method="get">
+<form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
     <!-- <input name="champion" type="text" placeholder="Champ..."> -->
     <input type="submit" value="Create draft" />
 </form>
