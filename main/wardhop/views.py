@@ -5,6 +5,7 @@ import main.settings as settings
 import hashlib
 import time
 
+
 cd = ChampionDatabase()
 
 
