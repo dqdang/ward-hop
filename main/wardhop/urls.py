@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     path('', views.BasePageView.as_view(), name='base'),
-    url(r'^pickban/', views.PickBanView.as_view(), name='pick_ban'),
+    url(r'^d/', views.PickBanView.as_view(), name='pick_ban'),
 ]
