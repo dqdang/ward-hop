@@ -65,7 +65,7 @@ class PickBanView(View):
             request.session["rotation_counter"] = 0
             return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, ""))
 
-        # Handle championg selection
+        # Handle champion selection
         champ = request.POST.get("champion")
         if champ:
             found = cd.search(champ)
