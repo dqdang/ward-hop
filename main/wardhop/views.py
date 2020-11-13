@@ -22,14 +22,10 @@ class BasePageView(View):
         lobby = hashlib.sha224(id.encode('utf-8')).hexdigest()
         all_images = [settings.STATIC_URL + self.images[champ]["full"]
                       for champ in self.images.keys()]
-        request.session["blue_ban"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                       "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
-        request.session["red_ban"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                      "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
-        request.session["blue"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                   "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
-        request.session["red"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                  "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
+        request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(6)]
+        request.session["red_ban"] = ["/static/Placeholder.png" for _ in range(6)]
+        request.session["blue"] = ["/static/Placeholder.png" for _ in range(6)]
+        request.session["red"] = ["/static/Placeholder.png" for _ in range(6)]
         request.session["lobby"] = lobby
         return render(request, self.template_name, {"lobby": lobby, "images": all_images})
 
@@ -92,14 +88,10 @@ class PickBanView(View):
         request.session["rotation_counter"] = 0
         lobby = hashlib.sha224(lobby.encode('utf-8')).hexdigest() # Rehash current lobby to generate new lobby
         request.session["lobby"] = lobby
-        request.session["blue_ban"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                       "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
-        request.session["red_ban"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                      "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
-        request.session["blue"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                   "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
-        request.session["red"] = ["/static/Placeholder.png", "/static/Placeholder.png",
-                                  "/static/Placeholder.png", "/static/Placeholder.png", "/static/Placeholder.png"]
+        request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(6)]
+        request.session["red_ban"] = ["/static/Placeholder.png" for _ in range(6)]
+        request.session["blue"] = ["/static/Placeholder.png" for _ in range(6)]
+        request.session["red"] = ["/static/Placeholder.png" for _ in range(6)]
         return lobby
 
     def handle_champ_selection(self, request, found, blue_ban, red_ban, blue, red):

@@ -1,48 +1,105 @@
 <!--templates/draft.html-->
+<html>
 
-<h1>Draft</h1>
-{% block content %}
-<form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
-    <input name="champion" type="text" placeholder="Champ...">
-    <input type="submit" value="Enter" />
-</form>
-<p>{{ error }}</p>
-<table style="width:100%">
-<tr>
-    <th>Blue</th>
-    <th>Red</th> 
-</tr>
-<tr>
-    {% for image in blue_ban %}
-    <td><div style="display:inline-block"><img src="{{ image }}" height='20px' width='20px' style='padding-right: 1px'/></div></td>
-    {% endfor %}
-    {% for image in red_ban %}
-    <td><div style="display:inline-block"><img src="{{ image }}" height='20px' width='20px' style='padding-right: 1px'/></div></td>
-    {% endfor %}
-</tr>
-<tr>
-    <td><div style="display:inline-block"><img src="{{ blue1 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-    <td><div style="display:inline-block"><img src="{{ red1 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-</tr>
-<tr>
-    <td><div style="display:inline-block"><img src="{{ blue2 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-    <td><div style="display:inline-block"><img src="{{ red2 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-</tr>
-<tr>
-    <td><div style="display:inline-block"><img src="{{ blue3 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-    <td><div style="display:inline-block"><img src="{{ red3 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-</tr>
-<tr>
-    <td><div style="display:inline-block"><img src="{{ blue4 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-    <td><div style="display:inline-block"><img src="{{ red4 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-</tr>
-<tr>
-    <td><div style="display:inline-block"><img src="{{ blue5 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-    <td><div style="display:inline-block"><img src="{{ red5 }}" height='100px' width='100px' style='padding-right: 6px'/></div></td>
-</tr>
-</table>
-<form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
-    <input name="clean" type="submit" value="New draft" />
-</form>
+<head>
+    <map onclick="window.location.href='/';">
+        <h1>Draft</h1>
+    </map>
+    {% block content %}
+    <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
+        <input name="champion" type="text" placeholder="Champ...">
+        <input type="submit" value="Enter" />
+    </form>
+    <p><strong>{{ error }}</strong></p>
+    <table style="display:inline-block">
+        <tr>
+            <th>Blue</th>
+        </tr>
+        <tr style="display:inline-block">
+            {% for image in blue_ban %}
+            <td>
+                <div style="display:inline-block"><img src="{{ image }}" height='20px' width='20px' /></div>
+            </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ blue1 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        <tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ blue2 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ blue3 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ blue4 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ blue5 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+    </table>
+    <table style="display:inline-block">
+        <tr>
+            <th>Red</th>
+        </tr>
+        <tr style="display:inline-block">
+            {% for image in red_ban %}
+            <td>
+                <div style="display:inline-block"><img src="{{ image }}" height='20px' width='20px' /></div>
+            </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ red1 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ red2 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ red3 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ red4 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="display:inline-block"><img src="{{ red5 }}" height='100px' width='100px'
+                        style='padding-right: 6px' /></div>
+            </td>
+        </tr>
+    </table>
+    <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
+        <input name="clean" type="submit" value="New draft" />
+    </form>
 
-{% endblock %}
+    {% endblock %}
+</head>
+
+</html>
