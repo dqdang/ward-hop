@@ -1,7 +1,14 @@
 <!--templates/draft.html-->
+
+<!DOCTYPE html>
+
 <html>
 
 <head>
+    <title>Draft</title>
+</head>
+
+<body>
     <map onclick="window.location.href='/';">
         <h1>Draft</h1>
     </map>
@@ -98,8 +105,7 @@
     <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
         <input name="clean" type="submit" value="New draft" />
     </form>
-
     {% endblock %}
-</head>
+</body>
 
 </html>
