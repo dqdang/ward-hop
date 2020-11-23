@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 
 TODO.txt
+
 .vscode/*
+
+download.bat
