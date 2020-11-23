@@ -105,5 +105,6 @@ function autocomplete(inp, arr) {
         closeAllLists(e.target);
     });
 }
+
 var champions = JSON.parse(document.getElementById('champions-data').textContent);
 autocomplete(document.getElementById("Champion"), champions);

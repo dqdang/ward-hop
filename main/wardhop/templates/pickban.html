@@ -22,10 +22,11 @@
         </div>
         <input type="submit" value="Enter" />
     </form>
-    <script type="text/javascript" src="{% static 'js/autocomplete.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/autocomplete.min.js' %}"></script>
     <p><strong>{{ error }}</strong></p>
     <table>
-        <th>Blue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        <th>Blue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </th>
         <th>Red</th>
         <tr>
             {% for image in blue_ban %}
