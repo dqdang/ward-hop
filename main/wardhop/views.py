@@ -19,7 +19,7 @@ class BasePageView(View):
             id = request.COOKIES.get('sessionid') + str(time.time())
         except TypeError:
             id = str(time.time())
-        lobby = hashlib.sha224(id.encode('utf-8')).hexdigest()
+        lobby = hashlib.sha224(id.encode('utf-8')).hexdigest()[0:8]
         all_images = [settings.STATIC_URL + self.images[champ]["full"]
                       for champ in self.images.keys()]
         request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(6)]
@@ -86,7 +86,7 @@ class PickBanView(View):
     def clean_cookies(self, request, lobby):
         print("Cleaning session")
         request.session["rotation_counter"] = 0
-        lobby = hashlib.sha224(lobby.encode('utf-8')).hexdigest() # Rehash current lobby to generate new lobby
+        lobby = hashlib.sha224(lobby.encode('utf-8')).hexdigest()[0:8] # Rehash current lobby to generate new lobby
         request.session["lobby"] = lobby
         request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(6)]
         request.session["red_ban"] = ["/static/Placeholder.png" for _ in range(6)]
