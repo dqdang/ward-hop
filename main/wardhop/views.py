@@ -92,15 +92,14 @@ class PickBanView(View):
         lobby = hashlib.sha224(lobby.encode('utf-8')).hexdigest()[0:8] # Rehash current lobby to generate new lobby
         request.session["rotation_counter"] = 0
         request.session["lobby"] = lobby
-        request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(6)]
-        request.session["red_ban"] = ["/static/Placeholder.png" for _ in range(6)]
-        request.session["blue"] = ["/static/Placeholder.png" for _ in range(6)]
-        request.session["red"] = ["/static/Placeholder.png" for _ in range(6)]
+        request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(5)]
+        request.session["red_ban"] = ["/static/Placeholder.png" for _ in range(5)]
+        request.session["blue"] = ["/static/Placeholder.png" for _ in range(5)]
+        request.session["red"] = ["/static/Placeholder.png" for _ in range(5)]
         return lobby
 
     def handle_champ_selection(self, request, champ, blue_ban, red_ban, blue, red):
         if champ in set([char.lower().split(".png")[0].split("/")[-1] for char in blue_ban + red_ban + blue + red]):
-            print("Champion already picked")
             return self.get_session(request)
         image = cd.get_champ_image(champ)
         if self.rotation[request.session["rotation_counter"]] == "blue_ban":
