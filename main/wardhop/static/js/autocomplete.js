@@ -96,7 +96,7 @@ function autocomplete(inp, arr) {
         var deseralizedArray = [];
         split = arr.split(", ")
         for(var i = 0; i < split.length; i++) {
-            split[i] = split[i].replaceAll("\"", "").replace("[", "")
+            split[i] = split[i].replaceAll("\"", "").replaceAll("[", "").replaceAll("]", "")
             deseralizedArray.push(split[i]);
         }
         return deseralizedArray;
