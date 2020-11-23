@@ -63,11 +63,12 @@ class ChampionDatabase():
         return None
 
     def search(self, key):
-        key = key.lower()
+        key = ''.join(e.lower() for e in key if e.isalpha())
+        if key == "":
+            return None
         champions = self.get_all_champ_names()
         for champ in champions:
             champ = champ.lower()
-            key = ''.join(e for e in key if e.isalpha())
             if champ.startswith(key):
                 return champ
         return None
