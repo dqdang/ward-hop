@@ -2,12 +2,13 @@
 
 <!DOCTYPE html>
 {% load static %}
+{{ champions|json_script:"champions-data"}}
 <html>
 
 <head>
     <title>Draft</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
 </head>
 
 <body>
@@ -15,95 +16,144 @@
         <h1>Draft</h1>
     </map>
     {% block content %}
-    <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
-        <input name="champion" type="text" placeholder="Champ...">
+    <form autocomplete="off" action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
+        <div class="autocomplete" style="width:300px;">
+            <input id="Champion" type="text" name="champion" placeholder="Champion...">
+        </div>
         <input type="submit" value="Enter" />
     </form>
+    <script type="text/javascript" src="{% static 'js/autocomplete.js' %}"></script>
     <p><strong>{{ error }}</strong></p>
     <table>
-        <tr>
-            <th>Blue</th>
-        </tr>
+        <th>Blue&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+        <th>Red</th>
         <tr>
             {% for image in blue_ban %}
             <td>
-                <div><img src="{{ image }}" height='20px' width='20px' /></div>
+                <img src="{{ image }}" height='20px' width='20px' />
             </td>
             {% endfor %}
-        </tr>
-        <tr>
-            <td>
-                <div><img src="{{ blue1 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
-            </td>
-        <tr>
-        <tr>
-            <td>
-                <div><img src="{{ blue2 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div><img src="{{ blue3 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div><img src="{{ blue4 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div><img src="{{ blue5 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
-            </td>
-        </tr>
-    </table>
-    <table>
-        <tr>
-            <th>Red</th>
-        </tr>
-        <tr>
             {% for image in red_ban %}
             <td>
-                <div><img src="{{ image }}" height='20px' width='20px' /></div>
+                <img src="{{ image }}" height='20px' width='20px' />
             </td>
             {% endfor %}
         </tr>
         <tr>
             <td>
-                <div><img src="{{ red1 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
+                <img src="{{ blue1 }}" height='100px' width='100px' style='padding-right: 6px' />
+            </td>
+            <td>
+                <img src="{{ red1 }}" height='100px' width='100px' style='padding-right: 6px' />
             </td>
         </tr>
         <tr>
             <td>
-                <div><img src="{{ red2 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
+                <img src="{{ blue2 }}" height='100px' width='100px' style='padding-right: 6px' />
+            </td>
+            <td>
+                <img src="{{ red2 }}" height='100px' width='100px' style='padding-right: 6px' />
             </td>
         </tr>
         <tr>
             <td>
-                <div><img src="{{ red3 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
+                <img src="{{ blue3 }}" height='100px' width='100px' style='padding-right: 6px' />
+            </td>
+            <td>
+                <img src="{{ red3 }}" height='100px' width='100px' style='padding-right: 6px' />
             </td>
         </tr>
         <tr>
             <td>
-                <div><img src="{{ red4 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
+                <img src="{{ blue4 }}" height='100px' width='100px' style='padding-right: 6px' />
+            </td>
+            <td>
+                <img src="{{ red4 }}" height='100px' width='100px' style='padding-right: 6px' />
             </td>
         </tr>
         <tr>
             <td>
-                <div><img src="{{ red5 }}" height='100px' width='100px'
-                        style='padding-right: 6px' /></div>
+                <img src="{{ blue5 }}" height='100px' width='100px' style='padding-right: 6px' />
+            </td>
+            <td>
+                <img src="{{ red5 }}" height='100px' width='100px' style='padding-right: 6px' />
             </td>
         </tr>
     </table>
+        <!-- <table>
+            <tr>
+                <th>Blue</th>
+            </tr>
+            <tr>
+                {% for image in blue_ban %}
+                <td>
+                    <img src="{{ image }}" height='20px' width='20px' />
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ blue1 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            <tr>
+            <tr>
+                <td>
+                    <img src="{{ blue2 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ blue3 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ blue4 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ blue5 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Red</th>
+            </tr>
+            <tr>
+                {% for image in red_ban %}
+                <td>
+                    <img src="{{ image }}" height='20px' width='20px' />
+                </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ red1 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ red2 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ red3 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ red4 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="{{ red5 }}" height='100px' width='100px' style='padding-right: 6px' />
+                </td>
+            </tr>
+        </table> -->
     <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
         <input name="clean" type="submit" value="New draft" />
     </form>
