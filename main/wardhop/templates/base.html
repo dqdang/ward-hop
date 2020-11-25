@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <h1>Draft</h1>
+    <h1><a href="/">Draft</a></h1>
 
     {% block content %}
     <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}

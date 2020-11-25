@@ -11,10 +11,16 @@
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
 </head>
 
+<script type="text/javascript">
+    function alert_back() {
+        var answer = confirm("Discard draft and continue?")
+        if (answer)
+            window.location = "/";
+    }
+</script>
+
 <body>
-    <map onclick="window.location.href='/';">
-        <h1>Draft</h1>
-    </map>
+    <h1><a href="javascript:alert_back();">Draft</a></h1>
     {% block content %}
     <form autocomplete="off" action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
         <div class="autocomplete" style="width:300px;">
@@ -24,6 +30,7 @@
     </form>
     <script type="text/javascript" src="{% static 'js/autocomplete.min.js' %}"></script>
     <p><strong>{{ error }}</strong></p>
+    <p><strong>{{ draft_rotation }}</strong></p>
     <table>
         <th style="padding-right: 59px;">Blue</th>
         <th>Red</th>
