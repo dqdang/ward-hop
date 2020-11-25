@@ -41,7 +41,6 @@ class PickBanView(View):
                 "red", "blue", "blue", "red", "red_ban", "blue_ban", "red_ban", "blue_ban", "red", "blue", "blue", "red"]
 
     def get(self, request):
-        lobby = self.clean_session(request, request.session["lobby"])
         lobby, blue_ban, red_ban, blue, red = self.get_session(request)
         return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions))
 
