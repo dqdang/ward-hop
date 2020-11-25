@@ -42,6 +42,10 @@ class PickBanView(View):
 
     def get(self, request):
         lobby, blue_ban, red_ban, blue, red = self.get_session(request)
+        try:
+            rotation_counter = request.session["rotation_counter"]
+        except KeyError:
+            request.session["rotation_counter"] = 0
         return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, self.rotation[rotation_counter]))
 
     def post(self, request):
