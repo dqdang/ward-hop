@@ -49,6 +49,7 @@ class PickBanView(View):
         return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, self.rotation[rotation_counter]))
 
     def post(self, request):
+        # Initialize rotation counter; KeyError indicates first of session
         try:
             rotation_counter = request.session["rotation_counter"]
         except KeyError:
@@ -61,8 +62,6 @@ class PickBanView(View):
             lobby = self.clean_session(request, lobby)
             lobby, blue_ban, red_ban, blue, red = self.get_session(request)
             return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, self.rotation[rotation_counter]))
-
-        # Initialize rotation counter; KeyError indicates first of session
 
         # Once the draft ends, draft results are not altered per ``replace_placeholder`` function
         if request.session["rotation_counter"] >= len(self.rotation):
