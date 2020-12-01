@@ -41,14 +41,17 @@ class PickBanView(View):
                 "red", "blue", "blue", "red", "red_ban", "blue_ban", "red_ban", "blue_ban", "red", "blue", "blue", "red"]
 
     def get(self, request):
+        error = ""
         lobby, blue_ban, red_ban, blue, red = self.get_session(request)
         try:
             rotation_counter = request.session["rotation_counter"]
         except KeyError:
             request.session["rotation_counter"] = 0
-        return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, self.rotation[rotation_counter]))
+        return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
 
     def post(self, request):
+        error = ""
+
         # Initialize rotation counter; KeyError indicates first of session
         try:
             rotation_counter = request.session["rotation_counter"]
@@ -61,29 +64,31 @@ class PickBanView(View):
         if request.POST.get("clean"):
             lobby = self.clean_session(request, lobby)
             lobby, blue_ban, red_ban, blue, red = self.get_session(request)
-            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, self.rotation[rotation_counter]))
+            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
 
         # Once the draft ends, draft results are not altered per ``replace_placeholder`` function
         if request.session["rotation_counter"] >= len(self.rotation):
-            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, "Draft complete"))
+            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete"))
 
         # Handle champion selection
         champ = request.POST.get("champion")
         if champ:
             found = cd.search(champ)
             if found:
-                lobby, blue_ban, red_ban, blue, red = self.handle_champ_selection(
+                (lobby, blue_ban, red_ban, blue, red), changed = self.handle_champ_selection(
                     request, found, blue_ban, red_ban, blue, red)
                 rotation_counter = request.session["rotation_counter"]
                 if rotation_counter < len(self.rotation):
-                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, self.rotation[rotation_counter]))
+                    if changed:
+                        error = "Champion already selected"
+                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
                 else:
-                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, "Draft complete")) 
+                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete"))
             else:
                 error = "Champion not found."
                 return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
         else:
-            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, "", self.champions, self.rotation[rotation_counter]))
+            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
         return render(request, self.error_template)
 
     def replace_placeholder(self, l, key):
@@ -95,7 +100,8 @@ class PickBanView(View):
 
     def clean_session(self, request, lobby):
         print("Cleaning session")
-        lobby = hashlib.sha224(lobby.encode('utf-8')).hexdigest()[0:8] # Rehash current lobby to generate new lobby
+        # Rehash current lobby to generate new lobby
+        lobby = hashlib.sha224(lobby.encode('utf-8')).hexdigest()[0:8]
         request.session["rotation_counter"] = 0
         request.session["lobby"] = lobby
         request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(5)]
@@ -106,7 +112,8 @@ class PickBanView(View):
 
     def handle_champ_selection(self, request, champ, blue_ban, red_ban, blue, red):
         if champ in set([char.lower().split(".png")[0].split("/")[-1] for char in blue_ban + red_ban + blue + red]):
-            return self.get_session(request)
+            session = self.get_session(request)
+            return session, True
         image = cd.get_champ_image(champ)
         if self.rotation[request.session["rotation_counter"]] == "blue_ban":
             request.session["blue_ban"] = self.replace_placeholder(
@@ -121,7 +128,8 @@ class PickBanView(View):
             request.session["red"] = self.replace_placeholder(
                 request.session["red"], settings.STATIC_URL + image["full"])
         request.session["rotation_counter"] += 1
-        return self.get_session(request)
+        session = self.get_session(request)
+        return session, False
 
     def get_session(self, request):
         return request.session["lobby"], request.session["blue_ban"], request.session["red_ban"], request.session["blue"], request.session["red"]
@@ -144,5 +152,5 @@ class PickBanView(View):
             "red5": red[4],
             "error": error,
             "champions": json.dumps(champions),
-            "draft_rotation" : draft_rotation
+            "draft_rotation": draft_rotation
         }
