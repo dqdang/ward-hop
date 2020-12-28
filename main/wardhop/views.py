@@ -68,7 +68,11 @@ class PickBanView(View):
 
         # Once the draft ends, draft results are not altered per ``replace_placeholder`` function
         if request.session["rotation_counter"] >= len(self.rotation):
-            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete"))
+            blue_selected_champs = blue_selected_champs()
+            red_selected_champs = red_selected_champs()
+            blue_analysis = cd.get_multiple_champ_analysis(blue_selected_champs)
+            red_analysis = cd.get_multiple_champ_analysis(red_selected_champs)
+            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", blue_analysis, red_analysis))
 
         # Handle champion selection
         champ = request.POST.get("champion")
@@ -111,7 +115,7 @@ class PickBanView(View):
         return lobby
 
     def handle_champ_selection(self, request, champ, blue_ban, red_ban, blue, red):
-        if champ in set([char.lower().split(".png")[0].split("/")[-1] for char in blue_ban + red_ban + blue + red]):
+        if champ in selected_champs():
             session = self.get_session(request)
             return session, True
         image = cd.get_champ_image(champ)
@@ -134,7 +138,7 @@ class PickBanView(View):
     def get_session(self, request):
         return request.session["lobby"], request.session["blue_ban"], request.session["red_ban"], request.session["blue"], request.session["red"]
 
-    def get_html_elems(self, lobby, blue_ban, red_ban, blue, red, error, champions, draft_rotation):
+    def get_html_elems(self, lobby, blue_ban, red_ban, blue, red, error, champions, draft_rotation, blue_analysis, red_analysis):
         draft_rotation = draft_rotation.replace("_", " ").title()
         return {
             "lobby": lobby,
@@ -152,5 +156,16 @@ class PickBanView(View):
             "red5": red[4],
             "error": error,
             "champions": json.dumps(champions),
-            "draft_rotation": draft_rotation
+            "draft_rotation": draft_rotation,
+            "blue_analysis": blue_analysis,
+            "red_analysis": red_analysis
         }
+
+    def selected_champs():
+        return set([char.lower().split(".png")[0].split("/")[-1] for char in blue_ban + red_ban + blue + red])
+
+    def red_selected_champs():
+        return set([char.lower().split(".png")[0].split("/")[-1] for char in red])
+    
+    def blue_selected_champs():
+        return set([char.lower().split(".png")[0].split("/")[-1] for char in blue])

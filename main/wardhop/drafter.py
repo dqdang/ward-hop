@@ -1,7 +1,7 @@
 import os
 from riotwatcher import LolWatcher, ApiError
 import main.settings as settings
-
+import analysis
 
 try:
     API_KEY = os.environ["API_KEY"]
@@ -72,3 +72,24 @@ class ChampionDatabase():
             if champ.startswith(key):
                 return champ
         return None
+
+    def get_all_champ_analysis(self):
+        analysis_dict = {}
+        for champ in self.static_champ_list['data']:
+            if champ == "MonkeyKing":
+                champ = "Wukong"
+            analysis_dict[champ] = analysis.analyze(champ)
+        return analysis_dict
+
+    def get_single_champ_analysis(self, champ):
+        if champ == "MonkeyKing":
+            champ = "Wukong"
+        return analysis.analyze(champ)
+
+    def get_multiple_champ_analysis(self, champs):
+        analysis_dict = {}
+        for champ in chaamps:
+            if champ == "MonkeyKing":
+                champ = "Wukong"
+            analysis_dict[champ] = analysis.analyze(champ)
+        return analysis_dict
