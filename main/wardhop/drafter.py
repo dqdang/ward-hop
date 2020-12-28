@@ -1,7 +1,7 @@
 import os
 from riotwatcher import LolWatcher, ApiError
 import main.settings as settings
-import analysis
+from wardhop import analysis
 
 try:
     API_KEY = os.environ["API_KEY"]
@@ -88,7 +88,7 @@ class ChampionDatabase():
 
     def get_multiple_champ_analysis(self, champs):
         analysis_dict = {}
-        for champ in chaamps:
+        for champ in champs:
             if champ == "MonkeyKing":
                 champ = "Wukong"
             analysis_dict[champ] = analysis.analyze(champ)
