@@ -15,7 +15,6 @@
 
     {% block content %}
     <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
-        <!-- <input name="champion" type="text" placeholder="Champ..."> -->
         <input type="submit" value="Create draft" />
     </form>
     <br /><br />
