@@ -87,9 +87,9 @@ class ChampionDatabase():
         return analysis.analyze(champ)
 
     def get_multiple_champ_analysis(self, champs):
-        analysis_dict = []
+        analysis_results = []
         for champ in champs:
             if champ == "MonkeyKing":
                 champ = "Wukong"
-            analysis_dict.append(analysis.analyze(champ))
-        return analysis_dict
+            analysis_results.append(analysis.analyze(champ))
+        return analysis_results
