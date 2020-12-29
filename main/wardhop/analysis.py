@@ -1,4 +1,6 @@
 def analyze(champ):
+    # TODO: Analyze based on champs picked; Maybe have a way to categorize champions?
+    
     switcher = {
             "seraphine": "Seraphine hard poke in lane, save ult for disengage",
             "shyvana": "Shyvana farm til 6, contest drags",
