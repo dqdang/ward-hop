@@ -64,16 +64,13 @@ class PickBanView(View):
         if request.POST.get("clean"):
             lobby = self.clean_session(request, lobby)
             lobby, blue_ban, red_ban, blue, red = self.get_session(request)
+            rotation_counter = request.session["rotation_counter"]
             return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
 
         # Once the draft ends, draft results are not altered per ``replace_placeholder`` function
         if request.session["rotation_counter"] >= len(self.rotation):
-            blue_selected_champs = self.blue_selected_champs(blue)
-            red_selected_champs = self.red_selected_champs(red)
-            blue_analysis = cd.get_multiple_champ_analysis(blue_selected_champs)
-            red_analysis = cd.get_multiple_champ_analysis(red_selected_champs)
-            combined_analysis = self.combine_analysis(blue_analysis, red_analysis)
-            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", combined_analysis))
+            analysis = self.analyze(blue, red)
+            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", analysis))
 
         # Handle champion selection
         champ = request.POST.get("champion")
@@ -88,12 +85,8 @@ class PickBanView(View):
                         error = "Champion already selected"
                     return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
                 else:
-                    blue_selected_champs = self.blue_selected_champs(blue)
-                    red_selected_champs = self.red_selected_champs(red)
-                    blue_analysis = cd.get_multiple_champ_analysis(blue_selected_champs)
-                    red_analysis = cd.get_multiple_champ_analysis(red_selected_champs)
-                    combined_analysis = self.combine_analysis(blue_analysis, red_analysis)
-                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", combined_analysis))
+                    analysis = self.analyze(blue, red)
+                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", analysis))
             else:
                 error = "Champion not found."
                 return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
@@ -175,11 +168,15 @@ class PickBanView(View):
     def blue_selected_champs(self, blue):
         return [char.lower().split(".png")[0].split("/")[-1] for char in blue]
 
-    def combine_analysis(self, blue_analysis, red_analysis):
-        combined_analysis = []
+    def analyze(self, blue, red):
+        blue_selected_champs = self.blue_selected_champs(blue)
+        red_selected_champs = self.red_selected_champs(red)
+        blue_analysis = cd.get_multiple_champ_analysis(blue_selected_champs)
+        red_analysis = cd.get_multiple_champ_analysis(red_selected_champs)
+        analysis = []
         counter = 0
-        len_combined_analysis = len(blue_analysis)
-        while(counter < len_combined_analysis):
-            combined_analysis.append([blue_analysis[counter], red_analysis[counter]])
+        len_analysis = len(blue_analysis)
+        while(counter < len_analysis):
+            analysis.append([blue_analysis[counter], red_analysis[counter]])
             counter += 1
-        return combined_analysis
+        return analysis
