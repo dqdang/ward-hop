@@ -32,8 +32,10 @@
     <p><strong>{{ error }}</strong></p>
     <p><strong>{{ draft_rotation }}</strong></p>
     <table>
-        <th style="padding-right: 59px;">Blue</th>
-        <th>Red</th>
+        <tr>
+            <th style="padding-right: 59px;">Blue</th>
+            <th>Red</th>
+        </tr>
         <tr>
             {% for image in blue_ban %}
             <td>
@@ -86,6 +88,23 @@
                 <img src="{{ red5 }}" height='100px' width='100px' style='padding-right: 6px' />
             </td>
         </tr>
+    </table>
+    <br />
+    <table>
+        <tr style="display: table-row; border: 1px solid black;">
+            <th style="display: table-cell; border: 1px solid black;">Blue Analysis</th>
+            <th style="display: table-cell; border: 1px solid black;">Red Analysis</th>
+        </tr>
+        {% for champ in analysis %}
+        <tr style="display: table-row; border: 1px solid black;">
+            <td style="display: table-cell; border: 1px solid black;">
+                {{ champ.0 }}
+            </td>
+            <td style="display: table-cell; border: 1px solid black;">
+                {{ champ.1 }}
+            </td>
+        </tr>
+        {% endfor %}
     </table>
     <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
         <input name="clean" type="submit" value="New draft" />

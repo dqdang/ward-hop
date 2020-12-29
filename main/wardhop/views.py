@@ -72,7 +72,8 @@ class PickBanView(View):
             red_selected_champs = self.red_selected_champs(red)
             blue_analysis = cd.get_multiple_champ_analysis(blue_selected_champs)
             red_analysis = cd.get_multiple_champ_analysis(red_selected_champs)
-            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", blue_analysis, red_analysis))
+            combined_analysis = self.combine_analysis(blue_analysis, red_analysis)
+            return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", combined_analysis))
 
         # Handle champion selection
         champ = request.POST.get("champion")
@@ -91,7 +92,8 @@ class PickBanView(View):
                     red_selected_champs = self.red_selected_champs(red)
                     blue_analysis = cd.get_multiple_champ_analysis(blue_selected_champs)
                     red_analysis = cd.get_multiple_champ_analysis(red_selected_champs)
-                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", blue_analysis, red_analysis))
+                    combined_analysis = self.combine_analysis(blue_analysis, red_analysis)
+                    return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, "Draft complete", combined_analysis))
             else:
                 error = "Champion not found."
                 return render(request, self.draft_template, self.get_html_elems(lobby, blue_ban, red_ban, blue, red, error, self.champions, self.rotation[rotation_counter]))
@@ -142,7 +144,7 @@ class PickBanView(View):
     def get_session(self, request):
         return request.session["lobby"], request.session["blue_ban"], request.session["red_ban"], request.session["blue"], request.session["red"]
 
-    def get_html_elems(self, lobby, blue_ban, red_ban, blue, red, error, champions, draft_rotation, blue_analysis="", red_analysis=""):
+    def get_html_elems(self, lobby, blue_ban, red_ban, blue, red, error, champions, draft_rotation, analysis=""):
         draft_rotation = draft_rotation.replace("_", " ").title()
         return {
             "lobby": lobby,
@@ -161,15 +163,23 @@ class PickBanView(View):
             "error": error,
             "champions": json.dumps(champions),
             "draft_rotation": draft_rotation,
-            "blue_analysis": blue_analysis,
-            "red_analysis": red_analysis
+            "analysis": analysis
         }
 
     def selected_champs(self, blue_ban, red_ban, blue, red):
-        return set([char.lower().split(".png")[0].split("/")[-1] for char in blue_ban + red_ban + blue + red])
+        return [char.lower().split(".png")[0].split("/")[-1] for char in blue_ban + red_ban + blue + red]
 
     def red_selected_champs(self, red):
-        return set([char.lower().split(".png")[0].split("/")[-1] for char in red])
+        return [char.lower().split(".png")[0].split("/")[-1] for char in red]
     
     def blue_selected_champs(self, blue):
-        return set([char.lower().split(".png")[0].split("/")[-1] for char in blue])
+        return [char.lower().split(".png")[0].split("/")[-1] for char in blue]
+
+    def combine_analysis(self, blue_analysis, red_analysis):
+        combined_analysis = []
+        counter = 0
+        len_combined_analysis = len(blue_analysis)
+        while(counter < len_combined_analysis):
+            combined_analysis.append([blue_analysis[counter], red_analysis[counter]])
+            counter += 1
+        return combined_analysis

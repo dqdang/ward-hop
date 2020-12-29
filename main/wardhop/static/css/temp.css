@@ -1,10 +1,9 @@
 body {
     font: 16px Arial;
-    text-align: center;
+    /* text-align: center; */
 }
 table, th, td {
-    display: inline-flex;
-    border: 1px solid black;
+    display: inline-block;
 }
 * { box-sizing: border-box; }
 .autocomplete {
