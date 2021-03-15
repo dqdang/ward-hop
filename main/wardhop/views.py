@@ -25,8 +25,10 @@ class BasePageView(View):
                       for champ in self.images.keys()]
         request.session["rotation_counter"] = 0
         request.session["lobby"] = lobby
-        request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(5)]
-        request.session["red_ban"] = ["/static/Placeholder.png" for _ in range(5)]
+        request.session["blue_ban"] = [
+            "/static/Placeholder.png" for _ in range(5)]
+        request.session["red_ban"] = [
+            "/static/Placeholder.png" for _ in range(5)]
         request.session["blue"] = ["/static/Placeholder.png" for _ in range(5)]
         request.session["red"] = ["/static/Placeholder.png" for _ in range(5)]
         return render(request, self.template_name, {"lobby": lobby, "images": all_images})
@@ -107,8 +109,10 @@ class PickBanView(View):
         lobby = hashlib.sha224(lobby.encode('utf-8')).hexdigest()[0:8]
         request.session["rotation_counter"] = 0
         request.session["lobby"] = lobby
-        request.session["blue_ban"] = ["/static/Placeholder.png" for _ in range(5)]
-        request.session["red_ban"] = ["/static/Placeholder.png" for _ in range(5)]
+        request.session["blue_ban"] = [
+            "/static/Placeholder.png" for _ in range(5)]
+        request.session["red_ban"] = [
+            "/static/Placeholder.png" for _ in range(5)]
         request.session["blue"] = ["/static/Placeholder.png" for _ in range(5)]
         request.session["red"] = ["/static/Placeholder.png" for _ in range(5)]
         return lobby
@@ -164,7 +168,7 @@ class PickBanView(View):
 
     def red_selected_champs(self, red):
         return [char.lower().split(".png")[0].split("/")[-1] for char in red]
-    
+
     def blue_selected_champs(self, blue):
         return [char.lower().split(".png")[0].split("/")[-1] for char in blue]
 
