@@ -90,22 +90,22 @@
         </tr>
     </table>
     <br />
-    <table>
-        <tr style="display: table-row; border: 1px solid black;">
-            <th style="display: table-cell; border: 1px solid black;">Blue Analysis</th>
-            <th style="display: table-cell; border: 1px solid black;">Red Analysis</th>
+    <!-- <table>
+        <tr>
+            <th>Blue Analysis</th>
+            <th>Red Analysis</th>
         </tr>
         {% for champ in analysis %}
-        <tr style="display: table-row; border: 1px solid black;">
-            <td style="display: table-cell; border: 1px solid black;">
+        <tr>
+            <td>
                 {{ champ.0 }}
             </td>
-            <td style="display: table-cell; border: 1px solid black;">
+            <td>
                 {{ champ.1 }}
             </td>
         </tr>
         {% endfor %}
-    </table>
+    </table> -->
     <form action="{% url 'pick_ban' %}{{ lobby }}" method="post">{% csrf_token %}
         <input name="clean" type="submit" value="New draft" />
     </form>

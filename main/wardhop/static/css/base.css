@@ -4,9 +4,8 @@ body {
 }
 table, th, td {
     display: inline-flex;
-    border: 1px solid black;
 }
-* { box-sizing: border-box; }
+
 .autocomplete {
     /*the container must be positioned relative:*/
     position: relative;
